@@ -1,0 +1,16 @@
+<application>
+
+    <display-name>FLOW API</display-name>
+
+    <module>
+        <ejb>sports-software-core-1.0.jar</ejb>
+    </module>
+
+    <module>
+        <web>
+	        <web-uri>flow-lrs.war</web-uri>
+            <context-root>/flow-lrs</context-root>
+        </web>
+    </module>
+
+</application>

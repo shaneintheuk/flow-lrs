@@ -1,0 +1,1600 @@
+= Sporting Technology REST Service API Guide
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 2
+:sectlinks:
+:snippets: ../../../build/generated-snippets
+
+= API Usage
+
+== Making Requests
+
+=== Base URLs
+
+The base URLs for the Sporting Technology API are - https://www.sportingtechnology.com/flow-api for live - https://development.sportingtechnology.com/flow-api for sandbox.
+
+The API is only available over HTTPS.
+
+=== Authentication
+
+All requests must include your API key in the request header "AUTH_API_KEY".
+
+== Formatting
+
+=== Date Formats
+
+All rest dates are formatted as ISO8601 with timezone information.
+
+For rest calls that require dates, the format for this would be `YYYY-MM-DD`, where an example would look like `2019-10-02`.
+
+Note that some fields for "time" may return as a date object (Unix epoch timestamp), where the date part is `01/01/1970`. It is important to take the timezone into consideration, as the date returned may not match the daylight savings time of the original date, where the date will need to be converted to the current date to get the correct time.
+
+== Errors
+
+Every error includes the HTTP status code, as well as error details.
+
+=== Status codes
+
+Some common response codes include:
+
+|===
+|Response Code|Message|Description
+
+|`+400+`
+|Bad Request
+|Client sent an invalid request — such as lacking required request body or parameter
+
+|`+401+`
+|Unauthorized
+|Client failed to authenticate with the server
+
+|`+403+`
+|Forbidden
+|Client authenticated but does not have permission to access the requested resource
+
+|`+404+`
+|Not Found
+|The requested resource does not exist
+
+|`+412+`
+|Precondition Failed
+|One or more conditions in the request header fields evaluated to false
+
+|`+500+`
+|Internal Server Error
+|A generic error occurred on the server
+
+|`+503+`
+|Service Unavailable
+|The requested service is not available
+
+|===
+
+=== Error response fields
+
+The following parameters will be returned for error responses.
+
+|===
+|Parameter|Description
+
+|`+error+`
+|The error message
+
+|`+message+`
+|Further details of the error message
+
+|`+path+`
+|The URL path for the request
+
+|`+status+`
+|The HTTP status code
+
+|`+timestamp+`
+|The timestamp when this error occurred
+
+|===
+
+=== Example response
+
+[source,http,options="nowrap"]
+----
+{
+
+    timestamp: "2019-11-27T03:33:11.079Z",
+    status: 400,
+    error: "Missing parameters",
+    message: "Telephone number or email address required",
+    path: "/flow-api-test/enquiries"
+
+}
+----
+
+= Account Resources
+
+[#create-account]
+=== Create an account
+
+This function creates a new account. It uses course ids and levels to generate different account licensees if required.
+
+==== Request fields
+
+include::{snippets}/create-account/request-fields.adoc[]
+
+==== Request structure
+
+include::{snippets}/create-account/http-request.adoc[]
+
+==== Response fields
+
+include::{snippets}/create-account/response-fields.adoc[]
+
+==== Example response
+
+include::{snippets}/create-account/http-response.adoc[]
+
+==== CURL request
+
+include::{snippets}/create-account/curl-request.adoc[]
+
+[#logged-in-user-accounts]
+=== Get logged in user accounts
+
+This function returns the accounts for the logged in user
+
+==== Request parameters
+
+include::{snippets}/logged-in-user-accounts/request-parameters.adoc[]
+
+==== Request structure
+
+include::{snippets}/logged-in-user-accounts/http-request.adoc[]
+
+==== Response fields
+
+include::{snippets}/logged-in-user-accounts/response-fields.adoc[]
+
+==== Example response
+
+include::{snippets}/logged-in-user-accounts/http-response.adoc[]
+
+==== CURL request
+
+include::{snippets}/logged-in-user-accounts/curl-request.adoc[]
+
+[#logged-in-user-account-summary]
+=== Get logged in user accounts
+
+This function returns a summary of the accounts and students linked to a logged in user.
+
+==== Request parameters
+
+include::{snippets}/logged-in-user-account-summary/request-parameters.adoc[]
+
+==== Request structure
+
+include::{snippets}/logged-in-user-account-summary/http-request.adoc[]
+
+==== Response fields
+
+include::{snippets}/logged-in-user-account-summary/response-fields.adoc[]
+
+==== Example response
+
+include::{snippets}/logged-in-user-account-summary/http-response.adoc[]
+
+==== CURL request
+
+include::{snippets}/logged-in-user-account-summary/curl-request.adoc[]
+
+[#account-search-by-telephone]
+=== Search for accounts by telephone number
+
+This function returns the accounts and recent enrolments for a telephone number. The logged-in user requires an operator permission.
+
+==== Request parameters
+
+include::{snippets}/account-search-by-telephone/request-parameters.adoc[]
+
+==== Request structure
+
+include::{snippets}/account-search-by-telephone/http-request.adoc[]
+
+==== Response fields
+
+include::{snippets}/account-search-by-telephone/response-fields.adoc[]
+
+==== Example response
+
+include::{snippets}/account-search-by-telephone/http-response.adoc[]
+
+==== CURL request
+
+include::{snippets}/account-search-by-telephone/curl-request.adoc[]
+
+== Address REST Service
+
+The Address REST Service returns details on the addresses.
+
+[#logged-in-user-addresses]
+=== Get logged in user addresses
+
+This function returns the addresses for the logged in user
+
+==== Request parameters
+
+include::{snippets}/logged-in-user-addresses/request-parameters.adoc[]
+
+==== Request structure
+
+include::{snippets}/logged-in-user-addresses/http-request.adoc[]
+
+==== Response fields
+
+include::{snippets}/logged-in-user-addresses/response-fields.adoc[]
+
+==== Example response
+
+include::{snippets}/logged-in-user-addresses/http-response.adoc[]
+
+==== CURL request
+
+include::{snippets}/logged-in-user-addresses/curl-request.adoc[]
+
+== Credits REST Service
+
+The Credits REST Service returns information about students credits as well as credit packs.
+
+[#student-credit-packs]
+=== Get student credit packs
+
+This function returns the credit packs for a student (if specified), account (if specified) or the logged in user.
+
+==== Request parameters
+
+include::{snippets}/student-credit-packs/request-parameters.adoc[]
+
+==== Request structure
+
+include::{snippets}/student-credit-packs/http-request.adoc[]
+
+==== Response fields
+
+include::{snippets}/student-credit-packs/response-fields.adoc[]
+
+==== Example response
+
+include::{snippets}/student-credit-packs/http-response.adoc[]
+
+==== CURL request
+
+include::{snippets}/student-credit-packs/curl-request.adoc[]
+
+[#student-credits]
+=== Get student credits
+
+This function returns the credits for a student which are active
+
+==== Request parameters
+
+include::{snippets}/student-credits/request-parameters.adoc[]
+
+==== Request structure
+
+include::{snippets}/student-credits/http-request.adoc[]
+
+==== Response fields
+
+include::{snippets}/student-credits/response-fields.adoc[]
+
+==== Example response
+
+include::{snippets}/student-credits/http-response.adoc[]
+
+==== CURL request
+
+include::{snippets}/student-credits/curl-request.adoc[]
+
+[#student-credit]
+=== Get student credit
+
+This function returns a single student credit
+
+==== Path parameters
+
+include::{snippets}/student-credit/path-parameters.adoc[]
+
+==== Request structure
+
+include::{snippets}/student-credit/http-request.adoc[]
+
+==== Response fields
+
+include::{snippets}/student-credit/response-fields.adoc[]
+
+==== Example response
+
+include::{snippets}/student-credit/http-response.adoc[]
+
+==== CURL request
+
+include::{snippets}/student-credit/curl-request.adoc[]
+
+[#student-credit-pack-booking]
+=== Get student credit pack bookings
+
+This function returns bookings linked to a student credit pack
+
+==== Path parameters
+
+include::{snippets}/student-credit-pack-booking/path-parameters.adoc[]
+
+==== Request structure
+
+include::{snippets}/student-credit-pack-booking/http-request.adoc[]
+
+==== Response fields
+
+include::{snippets}/student-credit-pack-booking/response-fields.adoc[]
+
+==== Example response
+
+include::{snippets}/student-credit-pack-booking/http-response.adoc[]
+
+==== CURL request
+
+include::{snippets}/student-credit-pack-booking/curl-request.adoc[]
+
+== Enquiry REST Service
+
+The Enquiry REST Service returns details on the enquiries as well as the ability to create new enquiries.
+
+[#enquiry-add]
+=== Create enquiry
+
+The function creates a new enquiry in the organisation. Note that although the telephone and email are optional, at least one of these must be set.
+
+==== Request fields
+
+include::{snippets}/enquiry-add/request-parameters.adoc[]
+
+==== Request structure
+
+include::{snippets}/enquiry-add/http-request.adoc[]
+
+==== Response fields
+
+include::{snippets}/enquiry-add/response-fields.adoc[]
+
+==== Example response
+
+include::{snippets}/enquiry-add/http-response.adoc[]
+
+==== CURL request
+
+include::{snippets}/enquiry-add/curl-request.adoc[]
+
+[#enquiry-get]
+=== Accessing an enquiry
+
+The function returns the details for an enquiry.
+
+==== Path Parameters
+
+include::{snippets}/enquiry-get/path-parameters.adoc[]
+
+==== Request structure
+
+include::{snippets}/enquiry-get/http-request.adoc[]
+
+==== Response fields
+
+include::{snippets}/enquiry-get/response-fields.adoc[]
+
+==== Example response
+
+include::{snippets}/enquiry-get/http-response.adoc[]
+
+==== CURL request
+
+include::{snippets}/enquiry-get/curl-request.adoc[]
+
+== Person REST Service
+
+The Person REST Service returns details on a person in the system.
+
+[#person-get]
+=== Accessing a person
+
+The function returns the details for a person.
+
+==== Path Parameters
+
+include::{snippets}/person-get/path-parameters.adoc[]
+
+==== Request structure
+
+include::{snippets}/person-get/http-request.adoc[]
+
+==== Response fields
+
+include::{snippets}/person-get/response-fields.adoc[]
+
+==== Example response
+
+include::{snippets}/person-get/http-response.adoc[]
+
+==== CURL request
+
+include::{snippets}/person-get/curl-request.adoc[]
+
+[#person-update]
+=== Updating a person
+
+The function updates the person and/or the address details.
+
+==== Path Parameters
+
+include::{snippets}/person-update/path-parameters.adoc[]
+
+==== Request fields
+
+include::{snippets}/person-update/request-fields.adoc[]
+
+==== Request structure
+
+include::{snippets}/person-update/http-request.adoc[]
+
+==== Response fields
+
+include::{snippets}/person-update/response-fields.adoc[]
+
+==== Example response
+
+include::{snippets}/person-update/http-response.adoc[]
+
+==== CURL request
+
+include::{snippets}/person-update/curl-request.adoc[]
+
+[#logged-in-user]
+=== Accessing the logged-in user
+
+The function returns the details for a person.
+
+==== Request structure
+
+include::{snippets}/logged-in-user/http-request.adoc[]
+
+==== Response fields
+
+include::{snippets}/logged-in-user/response-fields.adoc[]
+
+==== Example response
+
+include::{snippets}/logged-in-user/http-response.adoc[]
+
+==== CURL request
+
+include::{snippets}/logged-in-user/curl-request.adoc[]
+
+[#logged-in-user-contacts]
+=== Accessing the logged-in user contacts
+
+The function returns the contacts for the logged in person.
+
+==== Request structure
+
+include::{snippets}/logged-in-user-contacts/http-request.adoc[]
+
+==== Response fields
+
+include::{snippets}/logged-in-user-contacts/response-fields.adoc[]
+
+==== Example response
+
+include::{snippets}/logged-in-user-contacts/http-response.adoc[]
+
+==== CURL request
+
+include::{snippets}/logged-in-user-contacts/curl-request.adoc[]
+
+[#person-exists]
+=== Checking if user exists
+
+The function checks whether a user exists via their email address.
+
+==== Request parameters
+
+include::{snippets}/person-exists/request-parameters.adoc[]
+
+==== Request structure
+
+include::{snippets}/person-exists/http-request.adoc[]
+
+==== Response fields
+
+include::{snippets}/person-exists/response-fields.adoc[]
+
+==== Example response
+
+include::{snippets}/person-exists/http-response.adoc[]
+
+==== CURL request
+
+include::{snippets}/person-exists/curl-request.adoc[]
+
+[#coordinator-get]
+=== Accessing a site coordinator
+
+The function returns the details for a site coordinator.
+
+==== Path Parameters
+
+include::{snippets}/site-coordinator-get/path-parameters.adoc[]
+
+==== Request structure
+
+include::{snippets}/site-coordinator-get/http-request.adoc[]
+
+==== Response fields
+
+include::{snippets}/site-coordinator-get/response-fields.adoc[]
+
+==== Example response
+
+include::{snippets}/site-coordinator-get/http-response.adoc[]
+
+==== CURL request
+
+include::{snippets}/site-coordinator-get/curl-request.adoc[]
+
+== Policies REST Service
+
+The Policies REST Service returns details about the privacy and terms and conditions policies for the organisation.
+
+[#privacy-policy-get]
+=== Accessing the current privacy policy
+
+The function returns the current active privacy policy for the organisation.
+
+==== Request structure
+
+include::{snippets}/privacy-policy-get/http-request.adoc[]
+
+==== Response fields
+
+include::{snippets}/privacy-policy-get/response-fields.adoc[]
+
+==== Example response
+
+include::{snippets}/privacy-policy-get/http-response.adoc[]
+
+==== CURL request
+
+include::{snippets}/privacy-policy-get/curl-request.adoc[]
+
+[#terms-and-conditions-get]
+=== Accessing the current terms and conditions
+
+The function returns the current active terms and conditions for the organisation.
+
+==== Request structure
+
+include::{snippets}/terms-and-conditions-get/http-request.adoc[]
+
+==== Response fields
+
+include::{snippets}/terms-and-conditions-get/response-fields.adoc[]
+
+==== Example response
+
+include::{snippets}/terms-and-conditions-get/http-response.adoc[]
+
+==== CURL request
+
+include::{snippets}/terms-and-conditions-get/curl-request.adoc[]
+
+[#policy-get]
+=== Accessing a policy
+
+The function returns the details for a policy.
+
+==== Path Parameters
+
+include::{snippets}/policy-get/path-parameters.adoc[]
+
+==== Request structure
+
+include::{snippets}/policy-get/http-request.adoc[]
+
+==== Response fields
+
+include::{snippets}/policy-get/response-fields.adoc[]
+
+==== Example response
+
+include::{snippets}/policy-get/http-response.adoc[]
+
+==== CURL request
+
+include::{snippets}/policy-get/curl-request.adoc[]
+
+== Student REST Service
+
+The student rest service returns and sets student details.
+
+[#create-student]
+=== Create a student
+
+This function creates a new student. It uses course ids and levels to generate different account licensees if required.
+
+==== Request fields
+
+include::{snippets}/create-student/request-fields.adoc[]
+
+==== Request structure
+
+include::{snippets}/create-student/http-request.adoc[]
+
+==== Response fields
+
+include::{snippets}/create-student/response-fields.adoc[]
+
+==== Example response
+
+include::{snippets}/create-student/http-response.adoc[]
+
+==== CURL request
+
+include::{snippets}/create-student/curl-request.adoc[]
+
+[#logged-in-user-students]
+=== Accessing the logged-in user students
+
+The function returns the students for the loggged in user.
+
+==== Request structure
+
+include::{snippets}/logged-in-user-students/http-request.adoc[]
+
+==== Response fields
+
+include::{snippets}/logged-in-user-students/response-fields.adoc[]
+
+==== Example response
+
+include::{snippets}/logged-in-user-students/http-response.adoc[]
+
+==== CURL request
+
+include::{snippets}/logged-in-user-students/curl-request.adoc[]
+
+[#get-latest-student-level]
+=== Get latest level for student
+
+This function returns the latest level for a student, taken from the most recent enrolment.
+
+==== Path Parameters
+
+include::{snippets}/get-latest-student-level/path-parameters.adoc[]
+
+==== Request structure
+
+include::{snippets}/get-latest-student-level/http-request.adoc[]
+
+==== Response fields
+
+include::{snippets}/get-latest-student-level/response-fields.adoc[]
+
+==== Example response
+
+include::{snippets}/get-latest-student-level/http-response.adoc[]
+
+==== CURL request
+
+include::{snippets}/get-latest-student-level/curl-request.adoc[]
+
+== Ticket Types REST Service
+
+The Ticket Type REST Service returns details on the ticket types in the system. These ticket types can be used when generated enquiries, where they are automatically linked to a ticket once generated.
+
+[#log-sports-note-open]
+=== Logging a Sports Note Open From Email
+
+This function logs a note open and returns a clear image.
+
+==== Path Parameters
+
+include::{snippets}/log-sports-note-open/path-parameters.adoc[]
+
+==== Request parameters
+
+include::{snippets}/log-sports-note-open/request-parameters.adoc[]
+
+==== Request structure
+
+include::{snippets}/log-sports-note-open/http-request.adoc[]
+
+==== Example response
+
+include::{snippets}/log-sports-note-open/http-response.adoc[]
+
+==== CURL request
+
+include::{snippets}/log-sports-note-open/curl-request.adoc[]
+
+[#ticket-types-get]
+=== Accessing ticket types
+
+The function returns the ticket types for the organisation.
+
+==== Request structure
+
+include::{snippets}/ticket-types-get/http-request.adoc[]
+
+==== Response fields
+
+include::{snippets}/ticket-types-get/response-fields.adoc[]
+
+==== Example response
+
+include::{snippets}/ticket-types-get/http-response.adoc[]
+
+==== CURL request
+
+include::{snippets}/ticket-types-get/curl-request.adoc[]
+
+[#ticket-type-get]
+=== Accessing a ticket type
+
+The function returns the details for a ticket type.
+
+==== Path Parameters
+
+include::{snippets}/ticket-type-get/path-parameters.adoc[]
+
+==== Request structure
+
+include::{snippets}/ticket-type-get/http-request.adoc[]
+
+==== Response fields
+
+include::{snippets}/ticket-type-get/response-fields.adoc[]
+
+==== Example response
+
+include::{snippets}/ticket-type-get/http-response.adoc[]
+
+==== CURL request
+
+include::{snippets}/ticket-type-get/curl-request.adoc[]
+
+== Waiting List REST Service
+
+The Waiting List REST Service returns details on waitng list entries.
+
+[#add-waiting-list]
+=== Create a waiting list
+
+This function creates a or modifies an existing waiting list
+
+==== Request fields
+
+include::{snippets}/add-waiting-list/request-fields.adoc[]
+
+==== Request structure
+
+include::{snippets}/add-waiting-list/http-request.adoc[]
+
+==== Response fields
+
+include::{snippets}/add-waiting-list/response-fields.adoc[]
+
+==== Example response
+
+include::{snippets}/add-waiting-list/http-response.adoc[]
+
+==== CURL request
+
+include::{snippets}/add-waiting-list/curl-request.adoc[]
+
+[#delete-waiting-list]
+=== Create a waiting list
+
+This function deletes a waiting list request by setting it 'CANCELLED'
+
+==== Path Parameters
+
+include::{snippets}/delete-waiting-list/path-parameters.adoc[]
+
+==== Request structure
+
+include::{snippets}/delete-waiting-list/http-request.adoc[]
+
+==== Response fields
+
+include::{snippets}/delete-waiting-list/response-fields.adoc[]
+
+==== Example response
+
+include::{snippets}/delete-waiting-list/http-response.adoc[]
+
+==== CURL request
+
+include::{snippets}/delete-waiting-list/curl-request.adoc[]
+
+[#logged-in-user-waiting-lists]
+=== Get logged in user waiting list entries
+
+This function returns the waiting list entries for the logged in user
+
+==== Request parameters
+
+include::{snippets}/logged-in-user-waiting-lists/request-parameters.adoc[]
+
+==== Request structure
+
+include::{snippets}/logged-in-user-waiting-lists/http-request.adoc[]
+
+==== Response fields
+
+include::{snippets}/logged-in-user-waiting-lists/response-fields.adoc[]
+
+==== Example response
+
+include::{snippets}/logged-in-user-waiting-lists/http-response.adoc[]
+
+==== CURL request
+
+include::{snippets}/logged-in-user-waiting-lists/curl-request.adoc[]
+
+[#get-waiting-list]
+=== Accessing waiting list entry
+
+The function returns the details for a waiting list entry.
+
+==== Path Parameters
+
+include::{snippets}/get-waiting-list/path-parameters.adoc[]
+
+==== Request structure
+
+include::{snippets}/get-waiting-list/http-request.adoc[]
+
+==== Response fields
+
+include::{snippets}/get-waiting-list/response-fields.adoc[]
+
+==== Example response
+
+include::{snippets}/get-waiting-list/http-response.adoc[]
+
+==== CURL request
+
+include::{snippets}/get-waiting-list/curl-request.adoc[]
+
+[#get-waiting-list-expiry]
+=== Accessing waiting list Expiry
+
+The function returns the waiting list details for a waiting list expiry.
+
+==== Path Parameters
+
+include::{snippets}/get-waiting-list-expiry/path-parameters.adoc[]
+
+==== Request structure
+
+include::{snippets}/get-waiting-list-expiry/http-request.adoc[]
+
+==== Response fields
+
+include::{snippets}/get-waiting-list-expiry/response-fields.adoc[]
+
+==== Example response
+
+include::{snippets}/get-waiting-list-expiry/http-response.adoc[]
+
+==== CURL request
+
+include::{snippets}/get-waiting-list-expiry/curl-request.adoc[]
+
+[#remove-waiting-list-expiry]
+=== Remove waiting list Expiry
+
+The function removes the waiting list expiry by setting it to 'CANCELLED'.
+
+==== Path Parameters
+
+include::{snippets}/remove-waiting-list-expiry/path-parameters.adoc[]
+
+==== Request structure
+
+include::{snippets}/remove-waiting-list-expiry/http-request.adoc[]
+
+==== Response fields
+
+include::{snippets}/remove-waiting-list-expiry/response-fields.adoc[]
+
+==== Example response
+
+include::{snippets}/remove-waiting-list-expiry/http-response.adoc[]
+
+==== CURL request
+
+include::{snippets}/remove-waiting-list-expiry/curl-request.adoc[]
+
+[#keep-waiting-list-expiry]
+=== Keep waiting list Expiry
+
+The function sets the waiting list expiry to 'KEEP'.
+
+==== Path Parameters
+
+include::{snippets}/keep-waiting-list-expiry/path-parameters.adoc[]
+
+==== Request structure
+
+include::{snippets}/keep-waiting-list-expiry/http-request.adoc[]
+
+==== Response fields
+
+include::{snippets}/keep-waiting-list-expiry/response-fields.adoc[]
+
+==== Example response
+
+include::{snippets}/keep-waiting-list-expiry/http-response.adoc[]
+
+==== CURL request
+
+include::{snippets}/keep-waiting-list-expiry/curl-request.adoc[]
+
+[#add-waiting-list-schedule]
+=== Create a Waiting List schedule
+
+This function creates a new schedule for a waiting list
+
+==== Request fields
+
+include::{snippets}/add-waiting-list-schedule/request-fields.adoc[]
+
+==== Path Parameters
+
+include::{snippets}/add-waiting-list-schedule/path-parameters.adoc[]
+
+==== Request structure
+
+include::{snippets}/add-waiting-list-schedule/http-request.adoc[]
+
+==== Response fields
+
+include::{snippets}/add-waiting-list-schedule/response-fields.adoc[]
+
+==== Example response
+
+include::{snippets}/add-waiting-list-schedule/http-response.adoc[]
+
+==== CURL request
+
+include::{snippets}/add-waiting-list-schedule/curl-request.adoc[]
+
+[#delete-waiting-list-schedule]
+=== Delete a Waiting List schedule
+
+This function deletes a schedule for a waiting list
+
+==== Path Parameters
+
+include::{snippets}/delete-waiting-list-schedule/path-parameters.adoc[]
+
+==== Request structure
+
+include::{snippets}/delete-waiting-list-schedule/http-request.adoc[]
+
+==== Response fields
+
+include::{snippets}/delete-waiting-list-schedule/response-fields.adoc[]
+
+==== Example response
+
+include::{snippets}/delete-waiting-list-schedule/http-response.adoc[]
+
+==== CURL request
+
+include::{snippets}/delete-waiting-list-schedule/curl-request.adoc[]
+
+= Assessment Resources
+
+== Program REST Service
+
+The Program REST Service returns the returns the details relating to programs in the organisation.
+
+[#programs-get]
+=== Accessing programs
+
+The function returns the programs for the organisation.
+
+==== Request structure
+
+include::{snippets}/programs-get/http-request.adoc[]
+
+==== Response fields
+
+include::{snippets}/programs-get/response-fields.adoc[]
+
+==== Example response
+
+include::{snippets}/programs-get/http-response.adoc[]
+
+==== CURL request
+
+include::{snippets}/programs-get/curl-request.adoc[]
+
+[#program-get]
+=== Accessing a program
+
+The function returns the details of a program.
+
+==== Path Parameters
+
+include::{snippets}/program-get/path-parameters.adoc[]
+
+==== Request structure
+
+include::{snippets}/program-get/http-request.adoc[]
+
+==== Response fields
+
+include::{snippets}/program-get/response-fields.adoc[]
+
+==== Example response
+
+include::{snippets}/program-get/http-response.adoc[]
+
+==== CURL request
+
+include::{snippets}/program-get/curl-request.adoc[]
+
+[#program-levels-get]
+=== Accessing program levels
+
+The function returns the program levels for a program.
+
+==== Path Parameters
+
+include::{snippets}/program-levels-get/path-parameters.adoc[]
+
+==== Request structure
+
+include::{snippets}/program-levels-get/http-request.adoc[]
+
+==== Response fields
+
+include::{snippets}/program-levels-get/response-fields.adoc[]
+
+==== Example response
+
+include::{snippets}/program-levels-get/http-response.adoc[]
+
+==== CURL request
+
+include::{snippets}/program-levels-get/curl-request.adoc[]
+
+= Course Resources
+
+== Course REST Service
+
+The course REST Service returns the details relating to courses setup.
+
+[#course-get]
+=== Accessing a course
+
+The function returns the course details.
+
+==== Path Parameters
+
+include::{snippets}/course-get/path-parameters.adoc[]
+
+==== Request structure
+
+include::{snippets}/course-get/http-request.adoc[]
+
+==== Response fields
+
+include::{snippets}/course-get/response-fields.adoc[]
+
+==== Example response
+
+include::{snippets}/course-get/http-response.adoc[]
+
+==== CURL request
+
+include::{snippets}/course-get/curl-request.adoc[]
+
+[#course-programs-get]
+=== Accessing course programs
+
+The function returns the the programs associated with a course, which relate to which programs can be enrolled when a course has no level set.
+
+==== Path Parameters
+
+include::{snippets}/course-programs-get/path-parameters.adoc[]
+
+==== Request structure
+
+include::{snippets}/course-programs-get/http-request.adoc[]
+
+==== Response fields
+
+include::{snippets}/course-programs-get/response-fields.adoc[]
+
+==== Example response
+
+include::{snippets}/course-programs-get/http-response.adoc[]
+
+==== CURL request
+
+include::{snippets}/course-programs-get/curl-request.adoc[]
+
+== Abandoned Cart REST Service
+
+The abandoned cart rest service returns and sets abandoned carts.
+
+[#create-student]
+=== Create a student
+
+This function creates a new abandoned cart
+
+==== Request fields
+
+include::{snippets}/add-abandoned-cart/request-fields.adoc[]
+
+==== Request structure
+
+include::{snippets}/add-abandoned-cart/http-request.adoc[]
+
+==== Response fields
+
+include::{snippets}/add-abandoned-cart/response-fields.adoc[]
+
+==== Example response
+
+include::{snippets}/add-abandoned-cart/http-response.adoc[]
+
+==== CURL request
+
+include::{snippets}/add-abandoned-cart/curl-request.adoc[]
+
+== Enrolment REST Service
+
+The course REST Service processes enrolments.
+
+[#enrol-student]
+=== Student Enrolment
+
+The function enrols a student into a course.
+
+==== Request Fields
+
+include::{snippets}/enrol-student/request-fields.adoc[]
+
+==== Request structure
+
+include::{snippets}/enrol-student/http-request.adoc[]
+
+==== Response fields
+
+include::{snippets}/enrol-student/response-fields.adoc[]
+
+==== Example response
+
+include::{snippets}/enrol-student/http-response.adoc[]
+
+==== CURL request
+
+include::{snippets}/enrol-student/curl-request.adoc[]
+
+== Term REST Service
+
+The Term REST Service returns the returns the details relating to calendars which courses are attached to.
+
+[#term-get]
+=== Accessing a term
+
+The function returns the term details.
+
+==== Path Parameters
+
+include::{snippets}/term-get/path-parameters.adoc[]
+
+==== Request structure
+
+include::{snippets}/term-get/http-request.adoc[]
+
+==== Response fields
+
+include::{snippets}/term-get/response-fields.adoc[]
+
+==== Example response
+
+include::{snippets}/term-get/http-response.adoc[]
+
+==== CURL request
+
+include::{snippets}/term-get/curl-request.adoc[]
+
+= Staff Resources
+
+== Instructors REST Service
+
+The Instructors REST Service returns the returns the details relating to an instructor.
+
+[#instructor-get]
+=== Accessing an instructor
+
+The function returns the details relating to an instructor.
+
+==== Path Parameters
+
+include::{snippets}/instructor-get/path-parameters.adoc[]
+
+==== Request structure
+
+include::{snippets}/instructor-get/http-request.adoc[]
+
+==== Response fields
+
+include::{snippets}/instructor-get/response-fields.adoc[]
+
+==== Example response
+
+include::{snippets}/instructor-get/http-response.adoc[]
+
+==== CURL request
+
+include::{snippets}/instructor-get/curl-request.adoc[]
+
+= Venue Resources
+
+== Regions REST Service
+
+The Regions REST Service returns the regions which are available. Each venue can be linked to a venue, where it provides categorisation of the venues for easy displaying.
+
+[#regions-get]
+=== Accessing the regions
+
+==== Request structure
+
+include::{snippets}/regions-get/http-request.adoc[]
+
+==== Response fields
+
+include::{snippets}/regions-get/response-fields.adoc[]
+
+==== Example response
+
+include::{snippets}/regions-get/http-response.adoc[]
+
+==== CURL request
+
+include::{snippets}/regions-get/curl-request.adoc[]
+
+[#region-venues-get]
+=== Accessing venues for a region
+
+==== Request structure
+
+include::{snippets}/region-venues-get/http-request.adoc[]
+
+==== Response fields
+
+include::{snippets}/region-venues-get/response-fields.adoc[]
+
+==== Example response
+
+include::{snippets}/region-venues-get/http-response.adoc[]
+
+==== CURL request
+
+include::{snippets}/region-venues-get/curl-request.adoc[]
+
+== Venues REST Service
+
+The Venues REST Service is used to obtain venues linked to this organisation, as well as any details relating to the venue.
+
+[#venues-get]
+=== Accessing all venues
+
+The function returns all of the active venues for the organisation
+
+==== Request structure
+
+include::{snippets}/venues-get/http-request.adoc[]
+
+==== Response fields
+
+include::{snippets}/venues-get/response-fields.adoc[]
+
+==== Example response
+
+include::{snippets}/venues-get/http-response.adoc[]
+
+==== CURL request
+
+include::{snippets}/venues-get/curl-request.adoc[]
+
+[#venues-search-get]
+=== Searching for venues by location
+
+The function returns all of the venues within the distance of the longitude and latitude provided.
+
+==== Request fields
+
+include::{snippets}/venues-search-get/request-parameters.adoc[]
+
+==== Request structure
+
+include::{snippets}/venues-search-get/http-request.adoc[]
+
+==== Response fields
+
+include::{snippets}/venues-search-get/response-fields.adoc[]
+
+==== Example response
+
+include::{snippets}/venues-search-get/http-response.adoc[]
+
+==== CURL request
+
+include::{snippets}/venues-search-get/curl-request.adoc[]
+
+[#venue-get]
+=== Accessing a venue
+
+The function returns the information for a single venue
+
+==== Path Parameters
+
+include::{snippets}/venue-get/path-parameters.adoc[]
+
+==== Request structure
+
+include::{snippets}/venue-get/http-request.adoc[]
+
+==== Response fields
+
+include::{snippets}/venue-get/response-fields.adoc[]
+
+==== Example response
+
+include::{snippets}/venue-get/http-response.adoc[]
+
+==== CURL request
+
+include::{snippets}/venue-get/curl-request.adoc[]
+
+[#address-get]
+=== Accessing a venue address
+
+The function returns an address for the given id.
+
+==== Path Parameters
+
+include::{snippets}/address-get/path-parameters.adoc[]
+
+==== Request structure
+
+include::{snippets}/address-get/http-request.adoc[]
+
+==== Response fields
+
+include::{snippets}/address-get/response-fields.adoc[]
+
+==== Example response
+
+include::{snippets}/address-get/http-response.adoc[]
+
+==== CURL request
+
+include::{snippets}/address-get/curl-request.adoc[]
+
+[#resource-get]
+=== Accessing a venue resource
+
+The function returns the resource for a venue (pool, court, oval, etc.)
+
+==== Path Parameters
+
+include::{snippets}/resource-get/path-parameters.adoc[]
+
+==== Request structure
+
+include::{snippets}/resource-get/http-request.adoc[]
+
+==== Response fields
+
+include::{snippets}/resource-get/response-fields.adoc[]
+
+==== Example response
+
+include::{snippets}/resource-get/http-response.adoc[]
+
+==== CURL request
+
+include::{snippets}/resource-get/curl-request.adoc[]
+
+[#venue-details-get]
+=== Accessing venue information
+
+The function returns the venue information details for that venue as keys and values.
+
+==== Path Parameters
+
+include::{snippets}/venue-details-get/path-parameters.adoc[]
+
+==== Request structure
+
+include::{snippets}/venue-details-get/http-request.adoc[]
+
+==== Response fields
+
+include::{snippets}/venue-details-get/response-fields.adoc[]
+
+==== Example response
+
+include::{snippets}/venue-details-get/http-response.adoc[]
+
+==== CURL request
+
+include::{snippets}/venue-details-get/curl-request.adoc[]
+
+[#venue-instructors-get]
+=== Accessing venue instructors
+
+The function returns the instructors with courses at this venue
+
+==== Path Parameters
+
+include::{snippets}/venue-instructors-get/path-parameters.adoc[]
+
+==== Request structure
+
+include::{snippets}/venue-instructors-get/http-request.adoc[]
+
+==== Response fields
+
+include::{snippets}/venue-instructors-get/response-fields.adoc[]
+
+==== Example response
+
+include::{snippets}/venue-instructors-get/http-response.adoc[]
+
+==== CURL request
+
+include::{snippets}/venue-instructors-get/curl-request.adoc[]
+
+[#venue-hours-get]
+=== Accessing venue operating hours
+
+The function returns the operating/office hours for a venue.
+
+==== Path Parameters
+
+include::{snippets}/venue-hours-get/path-parameters.adoc[]
+
+==== Request structure
+
+include::{snippets}/venue-hours-get/http-request.adoc[]
+
+==== Response fields
+
+include::{snippets}/venue-hours-get/response-fields.adoc[]
+
+==== Example response
+
+include::{snippets}/venue-hours-get/http-response.adoc[]
+
+==== CURL request
+
+include::{snippets}/venue-hours-get/curl-request.adoc[]
+
+[#venue-programs-get]
+=== Accessing venue programs
+
+The function returns the programs running at this venue
+
+==== Path Parameters
+
+include::{snippets}/venue-programs-get/path-parameters.adoc[]
+
+==== Request structure
+
+include::{snippets}/venue-programs-get/http-request.adoc[]
+
+==== Response fields
+
+include::{snippets}/venue-programs-get/response-fields.adoc[]
+
+==== Example response
+
+include::{snippets}/venue-programs-get/http-response.adoc[]
+
+==== CURL request
+
+include::{snippets}/venue-programs-get/curl-request.adoc[]
+
+[#venue-terms-get]
+=== Accessing venue terms
+
+The function returns the terms linked to this venue.
+
+==== Path Parameters
+
+include::{snippets}/venue-terms-get/path-parameters.adoc[]
+
+==== Request structure
+
+include::{snippets}/venue-terms-get/http-request.adoc[]
+
+==== Response fields
+
+include::{snippets}/venue-terms-get/response-fields.adoc[]
+
+==== Example response
+
+include::{snippets}/venue-terms-get/http-response.adoc[]
+
+==== CURL request
+
+include::{snippets}/venue-terms-get/curl-request.adoc[]
+
+== How Did You Hear REST Service
+
+The How Did You Hear REST Service is used to obtain elements relating to the marketing types linked to an account upon creation.
+
+[#how-did-you-hear-type]
+=== Accessing all how did you hear types
+
+The function returns all of the how did you hear types for the logged in user's master licensee
+
+==== Request structure
+
+include::{snippets}/how-did-you-hear-type/http-request.adoc[]
+
+==== Response fields
+
+include::{snippets}/how-did-you-hear-type/response-fields.adoc[]
+
+==== Example response
+
+include::{snippets}/how-did-you-hear-type/http-response.adoc[]
+
+==== CURL request
+
+include::{snippets}/how-did-you-hear-type/curl-request.adoc[]
+
+== Countries REST Service
+
+The Countries REST Service is used to obtain a list of countries to be used for payments.
+
+[#payment-countries]
+=== Accessing all how did you hear types
+
+The function returns all the countries.
+
+==== Request structure
+
+include::{snippets}/payment-countries/http-request.adoc[]
+
+==== Response fields
+
+include::{snippets}/payment-countries/response-fields.adoc[]
+
+==== Example response
+
+include::{snippets}/payment-countries/http-response.adoc[]
+
+==== CURL request
+
+include::{snippets}/payment-countries/curl-request.adoc[]

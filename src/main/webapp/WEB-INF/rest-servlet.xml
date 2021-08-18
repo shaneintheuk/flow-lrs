@@ -1,0 +1,122 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:jee="http://www.springframework.org/schema/jee"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context.xsd
+
+	 http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+    <context:component-scan
+            base-package="com.sportingtechnology" />
+
+    <bean class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean"/>
+
+    <bean class="org.springframework.validation.beanvalidation.MethodValidationPostProcessor"/>
+
+    <jee:jndi-lookup id="springPersistenceRef" jndi-name="java:/EntityManager_Swimapp" proxy-interface="javax.persistence.EntityManager"/>
+
+    <jee:jndi-lookup id="assessmentService"
+                     jndi-name="java:global/flow-web/sports-software-core-1.0/AssessmentServiceImpl"
+                     proxy-interface="uk.co.sportssoftware.assessment.IAssessmentService"/>
+
+    <jee:jndi-lookup id="staffFacade"
+                     jndi-name="java:global/flow-web/sports-software-core-1.0/StaffFacadeImpl"
+                     proxy-interface="uk.co.sportssoftware.staff.IStaffFacade"/>
+
+    <jee:jndi-lookup id="licenseeService"
+                     jndi-name="java:global/flow-web/sports-software-core-1.0/LicenseeServiceImpl"
+                     proxy-interface="uk.co.sportssoftware.licensee.ILicenseeService"/>
+
+    <jee:jndi-lookup id="venueService"
+                     jndi-name="java:global/flow-web/sports-software-core-1.0/VenueServiceImpl"
+                     proxy-interface="uk.co.sportssoftware.venue.IVenueService"/>
+
+    <jee:jndi-lookup id="accountService"
+                     jndi-name="java:global/flow-web/sports-software-core-1.0/AccountServiceImpl"
+                     proxy-interface="uk.co.sportssoftware.account.IAccountService"/>
+
+    <jee:jndi-lookup id="courseService"
+                     jndi-name="java:global/flow-web/sports-software-core-1.0/CourseServiceImpl"
+                     proxy-interface="uk.co.sportssoftware.course.ICourseService"/>
+
+    <jee:jndi-lookup id="studentAssessmentService"
+                     jndi-name="java:global/flow-web/sports-software-core-1.0/StudentAssessmentServiceImpl"
+                     proxy-interface="uk.co.sportssoftware.graph.IStudentAssessmentService"/>
+
+    <jee:jndi-lookup id="announcement"
+                     jndi-name="java:global/flow-web/sports-software-core-1.0/AnnouncementImpl"
+                     proxy-interface="au.com.lavaconsulting.core.announcements.IAnnouncement"/>
+
+    <jee:jndi-lookup id="lavaFinance"
+                     jndi-name="java:global/flow-web/sports-software-core-1.0/LavaFinanceImpl"
+                     proxy-interface="au.com.lavaconsulting.core.finance.ILavaFinance"/>
+
+    <jee:jndi-lookup id="lavaFinanceAdmin"
+                     jndi-name="java:global/flow-web/sports-software-core-1.0/LavaFinanceAdminImpl"
+                     proxy-interface="au.com.lavaconsulting.core.finance.ILavaFinanceAdmin"/>
+
+    <jee:jndi-lookup id="knowledge"
+                     jndi-name="java:global/flow-web/sports-software-core-1.0/KnowledgeImpl"
+                     proxy-interface="au.com.lavaconsulting.core.knowledge.IKnowledge"/>
+
+    <jee:jndi-lookup id="knowIt"
+                     jndi-name="java:global/flow-web/sports-software-core-1.0/KnowItImpl"
+                     proxy-interface="au.com.lavaconsulting.core.knowit.IKnowIt"/>
+
+    <jee:jndi-lookup id="knowItResourceBundle"
+                     jndi-name="java:global/flow-web/sports-software-core-1.0/KnowItResourceBundle"
+                     proxy-interface="au.com.lavaconsulting.core.knowit.IKnowItResourceBundle"/>
+
+    <jee:jndi-lookup id="lavaEmail"
+                     jndi-name="java:global/flow-web/sports-software-core-1.0/LavaEmailImpl"
+                     proxy-interface="au.com.lavaconsulting.core.email.ILavaEmail"/>
+
+    <jee:jndi-lookup id="widgetService"
+                     jndi-name="java:global/flow-web/sports-software-core-1.0/WidgetServiceImpl"
+                     proxy-interface="uk.co.sportssoftware.widget.IWidgetService"/>
+
+    <jee:jndi-lookup id="statisticService"
+                     jndi-name="java:global/flow-web/sports-software-core-1.0/StatisticServiceImpl"
+                     proxy-interface="uk.co.sportssoftware.statistics.IStatisticService"/>
+
+    <jee:jndi-lookup id="ticketService"
+                     jndi-name="java:global/flow-web/sports-software-core-1.0/TicketServiceImpl"
+                     proxy-interface="uk.co.sportssoftware.account.ITicketService"/>
+
+    <jee:jndi-lookup id="sportsFinanceFacade"
+                     jndi-name="java:global/flow-web/sports-software-core-1.0/SportsFinanceFacadeImpl"
+                     proxy-interface="uk.co.sportssoftware.admin.ISportsFinanceFacade"/>
+
+    <jee:jndi-lookup id="emailConfirmationService"
+                     jndi-name="java:global/flow-web/sports-software-core-1.0/EmailConfirmationImpl"
+                     proxy-interface="uk.co.sportssoftware.email.IEmailConfirmation"/>
+
+    <jee:jndi-lookup id="adminFacade"
+                     jndi-name="java:global/flow-web/sports-software-core-1.0/AdminFacadeImpl"
+                     proxy-interface="uk.co.sportssoftware.admin.IAdminFacade"/>
+
+    <jee:jndi-lookup id="eventManager"
+                     jndi-name="java:global/flow-web/sports-software-core-1.0/LavaEventManagerHelper"
+                     proxy-interface="au.com.lavaconsulting.core.events.ILavaEventManager"/>
+
+    <jee:jndi-lookup id="performanceService"
+                     jndi-name="java:global/flow-web/sports-software-core-1.0/PerformanceServiceImpl"
+                     proxy-interface="uk.co.sportssoftware.performance.IPerformanceService"/>
+
+    <jee:jndi-lookup id="trainingService"
+                     jndi-name="java:global/flow-web/sports-software-core-1.0/TrainingServiceImpl"
+                     proxy-interface="uk.co.sportssoftware.training.ITrainingService"/>
+
+    <jee:jndi-lookup id="userTransaction"
+                     jndi-name="java:jboss/UserTransaction"
+                     expected-type="javax.transaction.UserTransaction"/>
+
+    <!--The code below enables the @Transaction element-->
+    <bean id="transactionManager" class="org.springframework.transaction.jta.JtaTransactionManager"/>
+
+    <tx:annotation-driven />
+</beans>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jboss-web>
+	<!--
+	When jboss deploys the war it'll check for a jboss-web.xml file for
+	JBoss specific instructions.  This secure-domain line is optional (in Jetty)
+	a forces all EJB components to be authorized by JAAS.
+	-->
+    <security-domain>java:/jaas/LavaSecurityRealm</security-domain>
+
+    <context-root>/lrs</context-root>
+</jboss-web>
+
+
+
